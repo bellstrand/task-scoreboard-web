@@ -8,14 +8,8 @@ node_js:
 services:
   - docker
 
-env:
-  global:
-    - secure: "PBOnCc5HfNAqM4Z6lgZz5+E3FQwsTPcVFTtlEcXKHw2A/GSYd5x17fP+D07GaTok4cLc7usH2NF7Xlha3chNSktDULbqgrW1HgwxhIkGFx2K38JGRrEE3r/HQdnhyL2lxce0be1sZaFIFqT9lh0XC2oY6lFb7pGX2YI5xy430HpvJ0mOkU1pw9zh49+Oe7Ac+Dy3q7DpOvoNg3+6LJodMRps66GRtqwcx8PNj3+NXfJ4eDShxRY/kcAkdGljZqrduBZXcF/5YrG79oPoSgYRtDML8NWFWkygQGUbYe9kypEFO4i7cbneNdUuVtyNIoDUpa6Gn3fTlwIK/SQl6ULCH7rjmiIKsZ3dblPrV9t98FMeyz9OUwXHbVuIhwmLmJI1XWFiMoK2hd0B5J2QRBOBzHUa8y7oe0TPyMnYKccWe6eJKk3liAJOdZ2UbcPvSk3hio1l4LXkOgndITxR9Rp3Hy0vP+ylYY7eRIhCrZM5NnvLHEq74FMOeZCvnxJylYQHESMkPYcDwkwt/ePIBdGcJg9w9t5r8/yPAZKHU5I6qpsfL1sryuMBhI+B0ysKhWuUySgT41DUi0TX3RDLzc20Bmpu70YOFkvEwYilNArR8mHuEx8cxU3XH2iaVU+1rgEd+rR2SkVwh6iusUZKTEi9izfZjUyIJvzjc3sNgN6IUNs=" # DOCKER_EMAIL
-    - secure: "SkYZCzPha/+N4HsQpJvtUTBL5FZOmRSSHeYmtGw+IESPZusIS+ydAq09mR40+HxQ2kkC3isMdRl8oGVyZA0rpnm/PqjEfOSZpph9ppOS8ptDUtKjcuAO8vPRa18dYh7f5pmbSOzCLtLnBae/FAGRgWAVnXM9QXfG/hB83X9Zlm6WirLz2Z2uqlquwtlFstBR2AQ40CKvMLkgl0tjaoahOM3ew5pehjCfTPacn8HNg6UgD/fSz0AyikBV604hB1vI0z5+ApfR+/atyp4gmDMzEDGl+dsb2DG3h344Vt0r+F+gzyfncF2j0Ie2SksX/dZwKdALmMOLfLvAuTQkDvjJv9JGlPB/9deu5iWiI3OzNXeq/YyCUGSzZlrbzstTu/wi1JhW1o1PnavdFX046gHMxuRxnm7eCPCKATzLiafBZ1/JbOuRMuA+Jiiv3N2euluZIO3Cs3FWBepad0iBYwQcGSE7jKOycKwSeeZ5QrivnZXvOrlqs7V/+tg1+xsza19DVjZ+qOBGv5aTgXZp5yDMsvLLCfvSTNQICymSEUnQbS+5hUJITbDlrNc/HGwb/kEi8CN9juSmB3x7n/OGZIT5OyCQi7/22pl+QX2SU4ROF5nEZsHXvBXEsa7V2DWgSfnQGWlBSBxgQYN1blydfbWtR0gfYqcunrlh0RV2MPhUCgc=" # DOCKER_USERNAME
-    - secure: "N/Mw9GFRwJ8IklW4FP9vtR9auJdMjpZanOQTygRNdsVlACqai3xFSi6dGNSojg5Xrk6OW9FZ1q95kLreUKj1GYST3I1JIu0fDmkI6bWg1Sg4rJ5KVaAkpLvJnDga38iutH4ZIvWzc29K5cIEB5TrgLcigrZDiF6PhDQ3OcAt4rSW+LHKzi+U0Ai0a975PThU7pPlHQ/KUGOdein1A+HgmlTmTL8/saAYpmycV9zm8c4uFJj/8QvdtP4Nz6tnLa0xYW/1ukVKU5/pbBI/15rpTOFI0WWe76hUeW1Qb74eiv6nE+0Ifl+NtbEEemBUYJF0GlGJa9WoSN5qHAxEqgawqlr5kti1dfxdCUtx8ZA6WQJxbAwR7AF5VI1u/1y483ihF/+hbIzNbt6/I3D0Gk4dYbFyvxh0e8pPvPRlWubzHjcDtZIXM+xYN6tpLKLn9yitcPs9RTWhgvXiIN1+x4KKIZpzc0uwzZU1Q4Q5aYV+lyDgBupY4/r/3rbTLWggtiMjNSISsSlWaTuJTypNPdE1C7v1QWpqWzZOLMLDdk5EaDUbzgLMGTbu+hIoU0XgvtPYf4Ov1tJ02Nk37+8J+8SRuPrTNluqi6O/hpdt3FW8qaUsLQhvelPl22cMH5BRHw3Aq2W+RCTuTlG2F2M0LOcgH0NKayGc9BpaDcXDgx1wt2c=" # DOCKER_PASSWORD
-    - COMMIT=${TRAVIS_COMMIT::8}
-
 script:
+  - echo "$DOCKER_EMAIL"
   - npm test
   - npm run prod
 
@@ -26,6 +20,7 @@ after_success:
 
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - export REPO=bellstrand/task-scoreboard-web
+  - export COMMIT=${TRAVIS_COMMIT::8}
   - export TAG=`if [ "$BRANCH" == "master" ]; then echo "latest"; else echo $BRANCH ; fi`
   - docker build -f Dockerfile -t $REPO:$COMMIT .
   - docker tag $REPO:$COMMIT $REPO:$TAG
