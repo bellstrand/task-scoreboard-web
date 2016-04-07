@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server --config webpack.config.js --hot --inline --progress --devtool source-map",
     "build": "webpack --config webpack.config.js --progress --profile",
     "prod": "webpack -p --config webpack.prod.config.js --progress --devtool source-map",
-    "test": "karma start"
+    "test": "karma start",
+    "karma": "karma start --single-run=false"
   },
   "repository": {
     "type": "git",
