@@ -4,7 +4,6 @@ language: node_js
 
 node_js:
   - "5"
-  - "4"
 
 services:
   - docker
@@ -15,6 +14,10 @@ env:
     - secure: "SkYZCzPha/+N4HsQpJvtUTBL5FZOmRSSHeYmtGw+IESPZusIS+ydAq09mR40+HxQ2kkC3isMdRl8oGVyZA0rpnm/PqjEfOSZpph9ppOS8ptDUtKjcuAO8vPRa18dYh7f5pmbSOzCLtLnBae/FAGRgWAVnXM9QXfG/hB83X9Zlm6WirLz2Z2uqlquwtlFstBR2AQ40CKvMLkgl0tjaoahOM3ew5pehjCfTPacn8HNg6UgD/fSz0AyikBV604hB1vI0z5+ApfR+/atyp4gmDMzEDGl+dsb2DG3h344Vt0r+F+gzyfncF2j0Ie2SksX/dZwKdALmMOLfLvAuTQkDvjJv9JGlPB/9deu5iWiI3OzNXeq/YyCUGSzZlrbzstTu/wi1JhW1o1PnavdFX046gHMxuRxnm7eCPCKATzLiafBZ1/JbOuRMuA+Jiiv3N2euluZIO3Cs3FWBepad0iBYwQcGSE7jKOycKwSeeZ5QrivnZXvOrlqs7V/+tg1+xsza19DVjZ+qOBGv5aTgXZp5yDMsvLLCfvSTNQICymSEUnQbS+5hUJITbDlrNc/HGwb/kEi8CN9juSmB3x7n/OGZIT5OyCQi7/22pl+QX2SU4ROF5nEZsHXvBXEsa7V2DWgSfnQGWlBSBxgQYN1blydfbWtR0gfYqcunrlh0RV2MPhUCgc=" # DOCKER_USERNAME
     - secure: "N/Mw9GFRwJ8IklW4FP9vtR9auJdMjpZanOQTygRNdsVlACqai3xFSi6dGNSojg5Xrk6OW9FZ1q95kLreUKj1GYST3I1JIu0fDmkI6bWg1Sg4rJ5KVaAkpLvJnDga38iutH4ZIvWzc29K5cIEB5TrgLcigrZDiF6PhDQ3OcAt4rSW+LHKzi+U0Ai0a975PThU7pPlHQ/KUGOdein1A+HgmlTmTL8/saAYpmycV9zm8c4uFJj/8QvdtP4Nz6tnLa0xYW/1ukVKU5/pbBI/15rpTOFI0WWe76hUeW1Qb74eiv6nE+0Ifl+NtbEEemBUYJF0GlGJa9WoSN5qHAxEqgawqlr5kti1dfxdCUtx8ZA6WQJxbAwR7AF5VI1u/1y483ihF/+hbIzNbt6/I3D0Gk4dYbFyvxh0e8pPvPRlWubzHjcDtZIXM+xYN6tpLKLn9yitcPs9RTWhgvXiIN1+x4KKIZpzc0uwzZU1Q4Q5aYV+lyDgBupY4/r/3rbTLWggtiMjNSISsSlWaTuJTypNPdE1C7v1QWpqWzZOLMLDdk5EaDUbzgLMGTbu+hIoU0XgvtPYf4Ov1tJ02Nk37+8J+8SRuPrTNluqi6O/hpdt3FW8qaUsLQhvelPl22cMH5BRHw3Aq2W+RCTuTlG2F2M0LOcgH0NKayGc9BpaDcXDgx1wt2c=" # DOCKER_PASSWORD
     - COMMIT=${TRAVIS_COMMIT::8}
+
+scripts:
+  - npm test
+  - npm run prod
 
 after_success:
   - export PR=https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls/$TRAVIS_PULL_REQUEST
