@@ -18,13 +18,13 @@ after_success:
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
 
   - if [ "$BRANCH" == "master" ]; then
-    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    export REPO=bellstrand/task-scoreboard-web;
-    export COMMIT=${TRAVIS_COMMIT::8};
-    export VERSION=`node -e "console.log(require('./package.json').version);"`;
-    docker build -f Dockerfile -t $REPO:latest .;
-    docker tag $REPO:$COMMIT $REPO:$VERSION;
-    docker push $REPO;
+      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      export REPO=bellstrand/task-scoreboard-web;
+      docker build -f Dockerfile -t $REPO:latest .;
+      if [ -n "TRAVIS_TAG" ]; then
+        docker tag $REPO:latest $REPO:$TRAVIS_TAG;
+      fi
+      docker push $REPO;
     fi
 
 notifications:
