@@ -17,11 +17,11 @@ after_success:
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
 
-  - if [ "$BRANCH" == "master" ]; then
+  - if [ "$BRANCH" == "master" ] && [ -n "TRAVIS_TAG" ]; then
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     export REPO=bellstrand/task-scoreboard-web;
-    docker build -f Dockerfile -t $REPO:latest .;
-    if [ -n "TRAVIS_TAG" ]; then docker tag $REPO:latest $REPO:$TRAVIS_TAG; fi;
+    docker build -f Dockerfile -t $REPO:TRAVIS_TAG .;
+    docker tag $REPO:TRAVIS_TAG $REPO:$latest;
     docker push $REPO;
     fi
 
