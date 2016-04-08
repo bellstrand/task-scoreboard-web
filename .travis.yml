@@ -21,7 +21,7 @@ after_success:
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     export REPO=bellstrand/task-scoreboard-web;
     export COMMIT=${TRAVIS_COMMIT::8};
-    export VERSION=${node -e "console.log(require('./package.json').version);"};
+    export VERSION=`node -e "console.log(require('./package.json').version);"`;
     docker build -f Dockerfile -t $REPO:latest .;
     docker tag $REPO:$COMMIT $REPO:$VERSION;
     docker push $REPO;
