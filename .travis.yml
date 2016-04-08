@@ -9,7 +9,6 @@ services:
   - docker
 
 script:
-  - echo "$DOCKER_EMAIL"
   - npm test
   - npm run prod
 

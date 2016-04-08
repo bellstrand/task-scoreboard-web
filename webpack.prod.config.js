@@ -22,7 +22,7 @@ module.exports = {
 	plugins: [
 		new AureliaWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			title: 'Aurelia webpack skeleton - ' + pkg.version,
+			title: 'Task Scoreboard - ' + pkg.version,
 			template: 'index.prod.html',
 			filename: 'index.html'
 		}),
