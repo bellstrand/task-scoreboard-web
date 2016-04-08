@@ -17,14 +17,15 @@ after_success:
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
 
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - export REPO=bellstrand/task-scoreboard-web
-  - export COMMIT=${TRAVIS_COMMIT::8}
-  - export TAG=`if [ "$BRANCH" == "master" ]; then echo "latest"; else echo $BRANCH ; fi`
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO
+  - if [ "$BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    export REPO=bellstrand/task-scoreboard-web;
+    export COMMIT=${TRAVIS_COMMIT::8};
+    export VERSION=${node -e "console.log(require('./package.json').version);"};
+    docker build -f Dockerfile -t $REPO:latest .;
+    docker tag $REPO:$COMMIT $REPO:$VERSION;
+    docker push $REPO;
+    fi
 
 notifications:
   email: false
