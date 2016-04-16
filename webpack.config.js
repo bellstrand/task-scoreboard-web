@@ -2,12 +2,12 @@
 
 var path = require('path');
 var AureliaWebpackPlugin = require('aurelia-webpack-plugin');
-var ProvidePlugin = require('webpack/lib/ProvidePlugin');
 
 module.exports = {
 	devServer: {
 		host: 'localhost',
-		port: 3000
+		port: 3000,
+		historyApiFallback: true
 	},
 	entry: {
 		main: [
@@ -19,10 +19,7 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	plugins: [
-		new AureliaWebpackPlugin(),
-		new ProvidePlugin({
-			Promise: 'bluebird'
-		})
+		new AureliaWebpackPlugin()
 	],
 	eslint: {
 		configFile: '.eslintrc'
