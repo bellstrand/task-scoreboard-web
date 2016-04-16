@@ -2,6 +2,8 @@ import './setup';
 import {App} from '../src/app';
 
 class RouterStub {
+	options = {};
+
 	configure(handler) {
 		handler(this);
 	}
@@ -11,13 +13,19 @@ class RouterStub {
 	}
 }
 
+class HttpStub {
+	configure(handler) {
+
+	}
+}
+
 describe('the App module', () => {
-	let sut;
-	let mockedRouter;
+	let sut, mockedRouter, mockedHttpClient;
 
 	beforeEach(() => {
 		mockedRouter = new RouterStub();
-		sut = new App({});
+		mockedHttpClient = new HttpStub();
+		sut = new App(mockedHttpClient);
 		sut.configureRouter(mockedRouter, mockedRouter);
 	});
 
@@ -30,6 +38,6 @@ describe('the App module', () => {
 	});
 
 	it('should have a scoreboard route', () => {
-		expect(sut.router.routes).toContain({ route: ['', 'scoreboard'], name: 'scoreboard',  moduleId: 'scoreboard', nav: true, title: 'Scoreboard' });
+		expect(sut.router.routes).toContain({ route: '', name: 'scoreboard',  moduleId: 'scoreboard', nav: true, title: 'Scoreboard' });
 	});
 });
